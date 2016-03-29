@@ -36,11 +36,15 @@ public class NewMain {
 
             //show issue
             EntityManager entityManager = entityManagerFactory.createEntityManager();
-            A a = new A(1L, "b");
+            B a = new B("b", "c");
             entityManager.getTransaction().begin();
             entityManager.persist(a);
             entityManager.flush();
-            Query query = entityManager.createQuery("SELECT a from A a WHERE TYPE(a) = A");
+            Query query = entityManager.createQuery("SELECT x from B x WHERE TYPE(x) = B"
+//                    "SELECT b from A b WHERE b.class = A"
+                    //"SELECT b from A b WHERE TYPE(b) = de.richtercloud.type.operator.nonsense.A"
+                    //"SELECT a from A a WHERE TYPE(a) = A"
+            );
             List<?> queryResult = query.getResultList();
             entityManager.getTransaction().commit();
             System.out.println(queryResult.size());
